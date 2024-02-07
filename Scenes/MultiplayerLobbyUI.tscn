@@ -1,0 +1,46 @@
+[gd_scene load_steps=2 format=3 uid="uid://b5ko313g6ra1t"]
+
+[ext_resource type="Script" path="res://Scripts/MultiplayerLobbyUI.gd" id="1_uddxk"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_uddxk")
+
+[node name="HostButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 46.0
+offset_top = 73.0
+offset_right = 287.0
+offset_bottom = 124.0
+text = "Host
+"
+
+[node name="JoinButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 318.0
+offset_top = 73.0
+offset_right = 559.0
+offset_bottom = 124.0
+text = "Join
+"
+
+[node name="StartServerButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 318.0
+offset_top = 168.0
+offset_right = 559.0
+offset_bottom = 219.0
+text = "Start Server
+"
+
+[node name="LineEdit" type="LineEdit" parent="."]
+layout_mode = 0
+offset_left = 53.0
+offset_top = 172.0
+offset_right = 315.0
+offset_bottom = 224.0

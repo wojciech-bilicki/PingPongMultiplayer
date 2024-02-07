@@ -1,0 +1,26 @@
+[gd_scene load_steps=5 format=3 uid="uid://e6kupyu3uco4"]
+
+[ext_resource type="Script" path="res://Scenes/Paddle/paddle.gd" id="1_rl24r"]
+[ext_resource type="Texture2D" uid="uid://d3td1fda0cscw" path="res://Scenes/Paddle/paddle.png" id="1_rx75i"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_obb0f"]
+size = Vector2(31, 256)
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_mself"]
+properties/0/path = NodePath(".:goal_velocity")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+
+[node name="Paddle" type="RigidBody2D"]
+gravity_scale = 0.0
+lock_rotation = true
+script = ExtResource("1_rl24r")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_rx75i")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_obb0f")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_mself")

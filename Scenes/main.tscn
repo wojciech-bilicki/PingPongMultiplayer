@@ -1,0 +1,67 @@
+[gd_scene load_steps=8 format=3 uid="uid://das2o8dsafvw3"]
+
+[ext_resource type="Script" path="res://Scenes/main.gd" id="1_jfu1m"]
+[ext_resource type="PackedScene" uid="uid://xsm2nf3lgo0n" path="res://Scenes/wall.tscn" id="2_5t3lj"]
+[ext_resource type="PackedScene" uid="uid://bw5krfpua7k72" path="res://Scenes/Ball/ball.tscn" id="3_w2p8l"]
+[ext_resource type="Texture2D" uid="uid://1q6kyynj3i76" path="res://PingPongDottedLine.png" id="5_5272g"]
+[ext_resource type="PackedScene" uid="uid://vvttoin4ngxq" path="res://end_detection_area.tscn" id="6_eta8n"]
+[ext_resource type="PackedScene" uid="uid://csn4ssq1ll01r" path="res://Scenes/UI/ui.tscn" id="8_v8jww"]
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_kdigp"]
+properties/0/path = NodePath(".:player_points")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath(".:enemy_points")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+
+[node name="main" type="Node2D"]
+script = ExtResource("1_jfu1m")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(2.08165e-12, 2.08165e-12)
+zoom = Vector2(0.4, 0.4)
+
+[node name="Walls" type="Node" parent="."]
+
+[node name="TopWall" parent="Walls" instance=ExtResource("2_5t3lj")]
+position = Vector2(10, -600)
+rotation = 1.5708
+scale = Vector2(1, 9)
+
+[node name="BottomWall" parent="Walls" instance=ExtResource("2_5t3lj")]
+position = Vector2(10, 600)
+rotation = 1.5708
+scale = Vector2(1, 9)
+
+[node name="Ball" parent="." groups=["ball"] instance=ExtResource("3_w2p8l")]
+
+[node name="Line2D" type="Line2D" parent="."]
+texture_repeat = 2
+position = Vector2(-1, -614)
+points = PackedVector2Array(0, 0, 0, 1200)
+width = 32.0
+texture = ExtResource("5_5272g")
+texture_mode = 1
+
+[node name="LeftEdge" parent="." instance=ExtResource("6_eta8n")]
+position = Vector2(-1142, 0)
+
+[node name="RightEdge" parent="." instance=ExtResource("6_eta8n")]
+position = Vector2(1143, 45)
+
+[node name="UI" parent="." instance=ExtResource("8_v8jww")]
+
+[node name="SpawnPositions" type="Node2D" parent="."]
+
+[node name="0" type="Node2D" parent="SpawnPositions" groups=["PlayerSpawns"]]
+position = Vector2(-1000, 0)
+
+[node name="1" type="Node2D" parent="SpawnPositions" groups=["PlayerSpawns"]]
+position = Vector2(1000, 0)
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_kdigp")
+
+[connection signal="point_scored" from="LeftEdge" to="." method="enemy_scored"]
+[connection signal="point_scored" from="RightEdge" to="." method="player_scored"]
